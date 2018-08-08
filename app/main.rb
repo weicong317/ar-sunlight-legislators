@@ -6,6 +6,7 @@ input = ARGV
 command = input[0]
 value = input[1]
 
+# find all the senators and representatives within the specific state
 def state(value)
 	puts "Senators:"
 	x = Legislator.select(:firstname, :middlename, :lastname, :party).order(:lastname).order(:lastname).where("title = 'Sen' AND state = ?", value)
@@ -28,6 +29,7 @@ def state(value)
 	end
 end
 
+# find the percent of male and female for senator and representative
 def gender(value)
 	total_value_sen = Legislator.all.where("title = ? AND gender = ?", "Sen", value).count
 	total_value_rep = Legislator.all.where("title = ? AND gender = ?", "Rep", value).count
@@ -42,6 +44,7 @@ def gender(value)
 	end
 end
 
+# list down the number of senator and representative in all state
 def list_state
 	x = Legislator.select(:title).group(:state).count
 	x = x.sort_by {|_key, value| value}.reverse.to_h
@@ -54,6 +57,7 @@ def list_state
 	end
 end
 
+# find total of senator and representative
 def total
 	total_sen = Legislator.all.where(title: "Sen").count
 	total_rep = Legislator.all.where(title: "Rep").count
